@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     HUBSTAFF_PERSONAL_ACCESS_TOKEN: str
     HUBSTAFF_API_URL: str
     HUBSTAFF_TOKENS: Path
+    HUBSTAFF_USER_ID: int
+    HUBSTAFF_ORG_ID: int
 
     @property
     def HUBSTAFF_TOKENS_PATH(self) -> Path:
