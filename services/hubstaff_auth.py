@@ -1,15 +1,13 @@
 import datetime
 import json
-import os
-
 import requests
 
 from core.config import settings
 
 
-def refresh_access_token():
+def refresh_access_token(refresh_token):
     response = requests.post(
-        f"https://account.hubstaff.com/access_tokens?grant_type=refresh_token&refresh_token=",
+        f"https://account.hubstaff.com/access_tokens?grant_type=refresh_token&refresh_token={refresh_token}",
     )
 
     if response.status_code != 200:
@@ -34,9 +32,11 @@ def is_token_expired(tokens_data):
 
 
 def get_access_token():
-    data = load_hubstaff_tokens()
+    tokens_data = load_hubstaff_tokens()
 
+    if not tokens_data or is_token_expired(tokens_data):
+        if not tokens_data.get('refresh_token'):
+            return refresh_access_token(settings.HUBSTAFF_PERSONAL_ACCESS_TOKEN)
+        return refresh_access_token(tokens_data.get('refresh_token'))
+    return tokens_data.get('access_token')
 
-data = load_hubstaff_tokens()
-print(data)
-print(is_token_expired(data))
