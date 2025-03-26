@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 
@@ -18,13 +19,24 @@ def refresh_access_token():
 
 
 def load_hubstaff_tokens():
-    if not os.path.exists(settings.HUBSTAFF_TOKENS):
-        return None
     with open(settings.HUBSTAFF_TOKENS_PATH) as f:
         return json.load(f)
 
 
-def get_access_token():
-    pass
+def save_hubstaff_tokens(tokens):
+    tokens["expire_at"] = datetime.datetime.now() + datetime.timedelta(seconds=tokens.get('expires_in'))
+    with open(settings.HUBSTAFF_TOKENS_PATH, "w+") as file:
+        json.dump(tokens, file)
 
-print(load_hubstaff_tokens())
+
+def is_token_expired(tokens_data):
+    return datetime.datetime.fromisoformat(tokens_data.get("expire_at")) < datetime.datetime.now()
+
+
+def get_access_token():
+    data = load_hubstaff_tokens()
+
+
+data = load_hubstaff_tokens()
+print(data)
+print(is_token_expired(data))
