@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     GOOGLE_CREDENTIALS: str
     TOKEN_FILE: str
     CALENDAR_ID: str
+    TIMEZONE: str
 
     HUBSTAFF_PERSONAL_ACCESS_TOKEN: str
     HUBSTAFF_API_URL: str

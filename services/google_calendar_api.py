@@ -5,18 +5,15 @@ from core.config import settings
 
 
 def convert_activity_to_event(activity: dict):
-    starts_at = datetime.fromisoformat(activity["starts_at"].replace("Z", "+00:00"))
-    ends_at = starts_at + timedelta(seconds=activity.get("tracked", 0))
-
     return {
         "summary": "Work SCS / tracking",
         "start": {
-            "dateTime": starts_at.isoformat(),
-            "timeZone": "UTC",
+            "dateTime": activity["start"],
+            "timeZone": settings.TIMEZONE,
         },
         "end": {
-            "dateTime": ends_at.isoformat(),
-            "timeZone": "UTC",
+            "dateTime": activity["end"],
+            "timeZone": settings.TIMEZONE,
         },
     }
 
