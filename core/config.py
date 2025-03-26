@@ -10,6 +10,7 @@ class Settings(BaseSettings):
 
     HUBSTAFF_PERSONAL_ACCESS_TOKEN: str
     HUBSTAFF_API_URL: str
+    HUBSTAFF_TOKENS: str
 
     class Config:
         env_file = ".env"
