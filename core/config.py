@@ -12,6 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 class Settings(BaseSettings):
     GOOGLE_CREDENTIALS: str
     TOKEN_FILE: str
+    CALENDAR_ID: str
 
     HUBSTAFF_PERSONAL_ACCESS_TOKEN: str
     HUBSTAFF_API_URL: str
