@@ -1,7 +1,12 @@
+from pathlib import Path
+
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
 load_dotenv()
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class Settings(BaseSettings):
@@ -10,7 +15,11 @@ class Settings(BaseSettings):
 
     HUBSTAFF_PERSONAL_ACCESS_TOKEN: str
     HUBSTAFF_API_URL: str
-    HUBSTAFF_TOKENS: str
+    HUBSTAFF_TOKENS: Path
+
+    @property
+    def HUBSTAFF_TOKENS_PATH(self) -> Path:
+        return (BASE_DIR / self.HUBSTAFF_TOKENS).resolve()
 
     class Config:
         env_file = ".env"
